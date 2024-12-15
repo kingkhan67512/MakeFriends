@@ -36,7 +36,7 @@ const Profile = () => {
 };
 
 const UserHeader = ({ user, router, handleLogout }) => {
-    console.log("userprofile:",);
+    // console.log("userprofile:",);
     return (
         
         <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: wp(4) }}>
@@ -48,7 +48,7 @@ const UserHeader = ({ user, router, handleLogout }) => {
                 <View style={{ marginBottom: 15 }}>
                     <View style={styles.avatarContainer}>
                         <Avatar
-                            uri={user?.image || ''}
+                            uri={user?.image}
                             size={hp(12)}
                             rounded={theme.radius.xxl * 1.4}
                         />
@@ -58,7 +58,7 @@ const UserHeader = ({ user, router, handleLogout }) => {
                     </View>
                     {/* Username and Address */}
                     <View style={{ alignItems: 'center', marginBottom: 10 }}>
-                        <Text style={styles.userName}>{user?.user_metadata?.name || 'No name available'}</Text>
+                        <Text style={styles.userName}>{user?.name || 'No name available'}</Text>
                         <Text style={styles.infoText}>{user?.address || 'No address provided'}</Text>
                     </View>
                     {/* Email */}
@@ -70,7 +70,7 @@ const UserHeader = ({ user, router, handleLogout }) => {
                     {
                         user && user.phoneNumber && (
                             <View style={styles.info}>
-                        <Icon name="camera" color={theme.colors.textLight} />
+                        <Icon name="call" color={theme.colors.textLight} />
                         <Text style={styles.infoText}>{user?.phoneNumber || 'No phone number provided'}</Text>
                         </View>
                         )
@@ -78,7 +78,7 @@ const UserHeader = ({ user, router, handleLogout }) => {
                     {
                         (
                             <View style={styles.info}>
-                        <Icon name="call" color={theme.colors.textLight} />
+                        <Icon name="camera" color={theme.colors.textLight} />
                         <Text style={styles.infoText}>{user.bio || 'Hey There I am using Link Up'}</Text>
                         </View>
                         )
