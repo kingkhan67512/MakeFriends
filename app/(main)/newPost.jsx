@@ -8,6 +8,10 @@ import { hp, wp } from '../../helpers/common'
 import { useAuth } from '../../contexts/authContext'
 import RichTextEditor from '../../components/RichTextEditor'
 import { useRouter } from 'expo-router'
+import Icon from '../../assets/icons'
+import Button from '../../components/Button'
+import * as ImagePicker from 'expo-image-picker'
+
 
 const newPost = () => {
     const {user} = useAuth();
@@ -16,7 +20,47 @@ const newPost = () => {
     const router = useRouter();
     const [loading,setLoading] = useState(false);
     const [file,setFile] = useState(null);
-  return (
+    
+    const onPick=async (isImage) => {
+        let mediaConfig = {
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 0.7,
+        }
+        if (!isImage){
+            mediaConfig={
+                mediaTypes: ['videos'],
+            allowsEditing : true
+            }
+        }
+        let result = await ImagePicker.launchImageLibraryAsync(mediaConfig);
+        if (!result.canceled){
+            setFile(result.assets[0]);
+        }
+    }
+    const isLocalFile = file =>{
+        if(!file) return null;
+        if(typeof file == 'object') return true;
+        return false;
+
+    }
+    const getFileType = file =>{
+        if(!file) return null;
+        if(isLocalFile(file)) 
+            return file.type;
+        // check image or video for remote file
+        if (file.includes('postImage')) {
+            return 'image';
+        }
+        return 'video';
+    }
+    
+
+    const onSubmit=async () => {
+        console.log("clicked")
+    }
+    return (
     <ScreenWrapper bg='white'>
     <View style={styles.container}>
     <Header title='Create Post'/>
@@ -44,7 +88,40 @@ const newPost = () => {
                         <View style={styles.textEditor}>
                             <RichTextEditor editorRef={editorRef} onChange={body=>bodyRef.current= body}/>
                         </View>
+                        {
+                            file && (   
+                                <View styles={styles.file}>
+                                getFileType(file) == video ? (
+                                    <></>
+                                ) :(
+                                    <>
+                                        {/* <Image source={uri:getFileUri(file)} resizeMode='cover' style=/> */}
+
+                                        
+                                    </>
+                                )
+                                </View>
+                            )
+                        }
+                        <View style={styles.media}>
+                            <Text style={styles.addImageText}>Add to your post</Text>
+                            <View style={styles.mediaIcons}>
+                                <TouchableOpacity onPress={()=> onPick(true)}>
+                                    <Icon name='image' size={30} color={theme.colors.dark}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={()=> onPick(false)}>
+                                    <Icon name='video' size={34} color={theme.colors.dark}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
         </ScrollView>
+        <Button
+            buttonStyle={{height:hp(6.2)}}
+            title='Post'
+            onPress={onSubmit}
+            loading={loading}
+            hasShadow={false}
+        />
     </View>
         
     </ScreenWrapper>
