@@ -76,4 +76,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: theme.radius.xl,
     backgroundColor: theme.colors.gray,
   },
+  rich:{
+    borderColor:theme.colors.gray,
+    minHeight:240,
+    borderBottomLeftRadius:theme.radius.xl,
+    borderBottomRightRadius:theme.radius.xl,
+    borderWidth:1.5
+  }
 });

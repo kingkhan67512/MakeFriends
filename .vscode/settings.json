@@ -1,0 +1,9 @@
+{
+    "git.decorations.enabled": true,
+    "editor.renderWhitespace": "selection",
+    "diffEditor.experimental.showEmptyDecorations": true,
+    "diffEditor.renderGutterMenu": true,
+    "diffEditor.renderIndicators": true,
+    "scm.diffDecorations": "all",
+    "git.enabled": true
+}

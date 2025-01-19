@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View } from 'react-native'
+import {ScrollView, StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
 import ScreenWrapper from '../../components/ScreenWrapper'
 import Header from '../../components/header'
@@ -55,7 +55,13 @@ const newPost = () => {
         }
         return 'video';
     }
-    
+    const getImageUri = file=>{
+        if(!file)return null;
+        if(isLocalFile(file)){
+            return file;
+        }
+
+    }
 
     const onSubmit=async () => {
         console.log("clicked")
@@ -91,15 +97,16 @@ const newPost = () => {
                         {
                             file && (   
                                 <View styles={styles.file}>
-                                getFileType(file) == video ? (
+                                {
+                                    getFileType(file) == video ? (
                                     <></>
                                 ) :(
                                     <>
-                                        {/* <Image source={uri:getFileUri(file)} resizeMode='cover' style=/> */}
+                                        <Image source={{uri:getFileUri(file)}} resizeMode='cover' style={{flex:1}}/>
 
                                         
                                     </>
-                                )
+                                )}
                                 </View>
                             )
                         }
@@ -110,7 +117,7 @@ const newPost = () => {
                                     <Icon name='image' size={30} color={theme.colors.dark}/>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={()=> onPick(false)}>
-                                    <Icon name='video' size={34} color={theme.colors.dark}/>
+                                    <Icon name='video' size={30} color={theme.colors.dark}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
